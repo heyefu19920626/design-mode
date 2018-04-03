@@ -1,4 +1,4 @@
-package simplefactory;
+package mode.create.simplefactory;
 
 /**
  * Description:

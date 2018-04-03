@@ -1,9 +1,8 @@
 package test.design.mode;
 
-import simplefactory.BaseCar;
-import simplefactory.BmCar;
-import simplefactory.CarFactory;
-import simplefactory.DzCar;
+import mode.create.simplefactory.BaseCar;
+import mode.create.simplefactory.CarFactory;
+import mode.create.simplefactory.DzCar;
 
 /**
  * Description:
@@ -20,10 +19,10 @@ public class Test {
         BaseCar bmcar = CarFactory.getBmCar();
         bmcar.dirver();
 
-        BaseCar dzcar = CarFactory.getCar("simplefactory.DzCar");
+        BaseCar dzcar = CarFactory.getCar("mode.create.simplefactory.DzCar");
         dzcar.dirver();
 
-        DzCar dzCar = (DzCar) CarFactory.getCar("simplefactory.DzCar");
+        DzCar dzCar = (DzCar) CarFactory.getCar("mode.create.simplefactory.DzCar");
         System.out.println(dzCar.getName());
 
     }

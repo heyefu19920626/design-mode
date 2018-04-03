@@ -1,7 +1,6 @@
-package simplefactory;
+package mode.create.simplefactory;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Description:
@@ -19,7 +18,7 @@ public class CarFactory {
      * 完整写法
      *
      * @param carName 需要获取对象的完整类名
-     * @return simplefactory.BaseCar
+     * @return BaseCar
      * @author heyefu 11:59 2018/4/3
      **/
     public static BaseCar getCar(String carName) {
@@ -46,7 +45,7 @@ public class CarFactory {
      * 简短写法
      *
      * @param className 类全名
-     * @return simplefactory.BaseCar
+     * @return BaseCar
      * @author heyefu 20:36 2018/4/3
      **/
     public static BaseCar getCarByReflect(String className) {

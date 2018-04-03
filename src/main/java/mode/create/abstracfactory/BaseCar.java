@@ -1,4 +1,4 @@
-package abstracfactory;
+package mode.create.abstracfactory;
 
 /**
  * Description:
