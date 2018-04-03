@@ -15,7 +15,7 @@ public class Test {
     @org.junit.Test
     public void simpleFactory() {
 
-        BaseCar bmcar = CarFactory.getBMCar();
+        BaseCar bmcar = CarFactory.getBmCar();
         bmcar.dirver();
 
 

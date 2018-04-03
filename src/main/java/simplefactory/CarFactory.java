@@ -14,7 +14,7 @@ public class CarFactory {
      * Description:
      * 利用反射机制获取对象
      *
-     * @param carName
+     * @param carName 需要获取对象的完整类名
      * @return simplefactory.BaseCar
      * @author heyefu 11:59 2018/4/3
      **/
@@ -22,12 +22,12 @@ public class CarFactory {
         return null;
     }
 
-    public static BMCar getBMCar() {
-        return new BMCar();
+    public static BmCar getBmCar() {
+        return new BmCar();
     }
 
-    public static DZCar getDZCar() {
-        return new DZCar();
+    public static DzCar getDzCar() {
+        return new DzCar();
     }
 
 }
