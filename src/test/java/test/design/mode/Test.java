@@ -4,6 +4,8 @@ import mode.create.simplefactory.BaseCar;
 import mode.create.simplefactory.CarFactory;
 import mode.create.simplefactory.DzCar;
 
+import java.io.IOException;
+
 /**
  * Description:
  *
@@ -13,8 +15,11 @@ import mode.create.simplefactory.DzCar;
  **/
 public class Test {
 
+
+
+
     @org.junit.Test
-    public void simpleFactory() {
+    public void simpleFactory() throws IOException {
 
         BaseCar bmcar = CarFactory.getBmCar();
         bmcar.dirver();
