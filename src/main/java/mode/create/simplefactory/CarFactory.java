@@ -59,6 +59,14 @@ public class CarFactory {
     }
 
 
+    /**
+     * Description:
+     * 测试git的ssh
+     *
+     * @param
+     * @return mode.create.simplefactory.BmCar
+     * @author tang 下午1:46 18-5-1
+     **/
     public static BmCar getBmCar() {
         return new BmCar();
     }
