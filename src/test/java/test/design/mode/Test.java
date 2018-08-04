@@ -1,5 +1,6 @@
 package test.design.mode;
 
+import mode.create.abstracfactory.*;
 import mode.create.simplefactory.BaseCar;
 import mode.create.simplefactory.CarFactory;
 import mode.create.simplefactory.DzCar;
@@ -18,7 +19,6 @@ public class Test {
 
     /**
      * 测试简单工厂模式.
-     *
      **/
     @org.junit.Test
     public void simpleFactory() throws IOException {
@@ -34,13 +34,25 @@ public class Test {
 
     }
 
+    /**
+     * 测试抽象工厂模式.
+     *
+     * @author heyefu 下午11:11 18-8-4
+     **/
     @org.junit.Test
     public void abstractFactory() {
 
-        int i = 16;
-        int j = (int) Math.sqrt(i);
-        System.out.println(j);
-        System.out.println(new Test().sqrt(9));
+        AbstractPcFactory dellPcFactory = new DellPcFactory();
+        Mouse dellMouse = dellPcFactory.createMouse();
+        Keyboard dellKeyboard = dellPcFactory.createKeyboard();
+        dellMouse.click();
+        dellKeyboard.keyPress();
+
+        AbstractPcFactory hpPcFactory = new HpPcFactory();
+        Mouse hpMouse = hpPcFactory.createMouse();
+        Keyboard hpKeyboard = hpPcFactory.createKeyboard();
+        hpMouse.click();
+        hpKeyboard.keyPress();
 
     }
 
@@ -57,6 +69,13 @@ public class Test {
         redCircle.draw();
     }
 
+    /**
+     * 牛顿迭代法求平方根.
+     *
+     * @param c 需要求平方根的目标数
+     * @return double 平方根
+     * @author heyefu 下午11:11 18-8-4
+     **/
     public double sqrt(double c) {
 
         double e = 0.00000000001;
