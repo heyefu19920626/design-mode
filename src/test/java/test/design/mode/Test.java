@@ -4,6 +4,7 @@ import mode.create.abstracfactory.*;
 import mode.create.simplefactory.BaseCar;
 import mode.create.simplefactory.CarFactory;
 import mode.create.simplefactory.DzCar;
+import mode.create.singleton.SingletonPattern;
 import mode.structure.decorator.*;
 
 import java.io.IOException;
@@ -53,6 +54,19 @@ public class Test {
         Keyboard hpKeyboard = hpPcFactory.createKeyboard();
         hpMouse.click();
         hpKeyboard.keyPress();
+
+    }
+
+    /**
+     * 测试单例模式.
+     *
+     * @author heyefu 下午10:14 18-8-5
+     **/
+    @org.junit.Test
+    public void singletonPattern() {
+//        饿汉式
+        SingletonPattern singletonPattern = SingletonPattern.getSinletonPattern();
+        singletonPattern.showMessage();
 
     }
 
