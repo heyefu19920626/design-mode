@@ -4,6 +4,7 @@ import mode.create.abstracfactory.*;
 import mode.create.simplefactory.BaseCar;
 import mode.create.simplefactory.CarFactory;
 import mode.create.simplefactory.DzCar;
+import mode.create.singleton.IdlerSingletonPattern;
 import mode.create.singleton.SingletonPattern;
 import mode.structure.decorator.*;
 
@@ -67,6 +68,10 @@ public class Test {
 //        饿汉式
         SingletonPattern singletonPattern = SingletonPattern.getSinletonPattern();
         singletonPattern.showMessage();
+
+//        懒汉式，线程安全，借用classloader机制
+        IdlerSingletonPattern lazySingleton = IdlerSingletonPattern.getIdlerSingletonPattern();
+        lazySingleton.showMessage();
 
     }
 
