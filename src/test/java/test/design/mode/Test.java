@@ -1,5 +1,9 @@
 package test.design.mode;
 
+import mode.behavioral.observer.BinaryObserver;
+import mode.behavioral.observer.HexaObserver;
+import mode.behavioral.observer.OctalObserver;
+import mode.behavioral.observer.Subject;
 import mode.create.abstracfactory.*;
 import mode.create.simplefactory.BaseCar;
 import mode.create.simplefactory.CarFactory;
@@ -86,6 +90,21 @@ public class Test {
         yellowRectangle.draw();
         Shape redCircle = new RedShapeDecorator(new Circle());
         redCircle.draw();
+    }
+
+    @org.junit.Test
+    public void observerPattern() {
+        Subject subject = new Subject();
+
+        new HexaObserver(subject);
+        new BinaryObserver(subject);
+        new OctalObserver(subject);
+
+        System.out.println("---------------");
+        subject.setState(16);
+        System.out.println("--------------");
+        subject.setState(8);
+
     }
 
     /**
