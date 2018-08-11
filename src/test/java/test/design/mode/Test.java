@@ -5,6 +5,8 @@ import mode.behavioral.observer.HexaObserver;
 import mode.behavioral.observer.OctalObserver;
 import mode.behavioral.observer.Subject;
 import mode.create.abstracfactory.*;
+import mode.create.builder.Meal;
+import mode.create.builder.MealBuilder;
 import mode.create.simplefactory.BaseCar;
 import mode.create.simplefactory.CarFactory;
 import mode.create.simplefactory.DzCar;
@@ -76,6 +78,28 @@ public class Test {
 //        懒汉式，线程安全，借用classloader机制
         IdlerSingletonPattern lazySingleton = IdlerSingletonPattern.getIdlerSingletonPattern();
         lazySingleton.showMessage();
+
+    }
+
+
+    /**
+     * 测试建造者模式.
+     *
+     * @author heyefu 下午8:53 18-8-11
+     **/
+    @org.junit.Test
+    public void builderPattern() {
+
+        MealBuilder mealBuilder = new MealBuilder();
+        Meal mealVegBurge = mealBuilder.prepareVegMeal();
+        mealVegBurge.showItems();
+        System.out.println(mealVegBurge.getCost());
+
+        System.out.println("--------------------");
+
+        Meal nonMeal = mealBuilder.prepareNonVegMeal();
+        nonMeal.showItems();
+        System.out.println(nonMeal.getCost());
 
     }
 
