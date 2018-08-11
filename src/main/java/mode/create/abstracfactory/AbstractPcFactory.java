@@ -2,6 +2,10 @@ package mode.create.abstracfactory;
 
 /**
  * PC设备抽象类.
+ * <p>
+ * 抽象工厂模式：
+ * １.　具有多个产品族
+ * 2. 一次只能使用一个族
  *
  * @author heyefu
  * @date 2018-08-04-下午10:56
