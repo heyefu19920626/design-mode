@@ -23,7 +23,7 @@ import java.io.IOException;
  * Create in: 2018-04-03
  * Time: 11:52
  **/
-public class Test {
+public class TestProxyModel {
 
     /**
      * 测试简单工厂模式.
