@@ -1,6 +1,8 @@
 package test.nowcode;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Description:
@@ -14,10 +16,55 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        //Scanner sc = new Scanner(System.in);
-        //long l = sc.nextLong();
-        //System.out.println(getResult(l));
-        sortString();
+        Scanner sc = new Scanner(System.in);
+        while (sc.hasNext()) {
+            String one = sc.nextLine();
+            query(one);
+        }
+    }
+
+    /**
+     * Description:
+     * <p>
+     * 寻找字符串中的最长数字子串
+     * <p>
+     * 输入一行不定长ASCII字符串，找出该字符串中的最长的数字子串，并输出该数字串，如果没有，输出空""
+     * <p>
+     * 数字串包含小数点.,小数点两边必须都为数字,小数点长度包含在总长度内,相同长度的以后出现的为准
+     * 例如：1234小于00123,123456.789大于123456789
+     * <p>
+     * 示例
+     * abcd123.456.789.0
+     * 输出
+     * 456.789
+     *
+     * @param line
+     * @author heyefu 11:26 2020/1/20
+     **/
+    public static void query(String line) {
+        Pattern regex = Pattern.compile("(\\d+\\.\\d+)|(\\d+)");
+        Matcher matcher = regex.matcher(line);
+        String result = null;
+        int len = 0;
+        while (matcher.find()) {
+            String s = matcher.group();
+            if (s.length() >= len) {
+                result = s;
+                len = s.length();
+            }
+            if (s.contains(".")) {
+                String temp = s.split("\\.")[0] + ".";
+                line = line.substring(line.indexOf(temp) + temp.length());
+            } else {
+                line = line.substring(line.indexOf(s) + s.length());
+            }
+            matcher = regex.matcher(line);
+        }
+        if (len == 0) {
+            System.out.println("");
+        } else {
+            System.out.println(result);
+        }
     }
 
     /**
