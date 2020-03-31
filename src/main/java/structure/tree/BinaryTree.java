@@ -31,7 +31,7 @@ public class BinaryTree {
     /**
      * Description:
      * <p>
-     * 根据层数获取完全二叉树.
+     * 根据层数获取满二叉树.
      *
      * @param layer 层数，需要大于0
      * @return structure.tree.BinaryTree
@@ -74,13 +74,13 @@ public class BinaryTree {
      *
      * @author heyefu 上午10:57 2020/3/31
      **/
-    public void preTraversing(Node node) {
+    public void preOrderTraverse(Node node) {
         if (node == null) {
             return;
         }
         System.out.print(node.getData() + " ");
-        preTraversing(node.getLeft());
-        preTraversing(node.getRight());
+        preOrderTraverse(node.getLeft());
+        preOrderTraverse(node.getRight());
     }
 
     /**
@@ -91,13 +91,24 @@ public class BinaryTree {
      * @param node 根节点
      * @author heyefu 上午11:19 2020/3/31
      **/
-    public void midTraversing(Node node) {
+    public void inOrderTraverse(Node node) {
         if (node == null) {
             return;
         }
-        midTraversing(node.getLeft());
+        if (node.getLTag() == 0) {
+            inOrderTraverse(node.getLeft());
+        }
         System.out.print(node.getData() + " ");
-        midTraversing(node.getRight());
+
+        if (node.getLTag() == 1) {
+            System.out.printf("(前驱: %d) ", node.getLeft().getData());
+        }
+        if (node.getRTag() == 1) {
+            System.out.printf("(后继: %d) ", node.getRight().getData());
+        }
+        if (node.getRTag() == 0) {
+            inOrderTraverse(node.getRight());
+        }
     }
 
     /**
@@ -108,13 +119,46 @@ public class BinaryTree {
      * @param node 根节点
      * @author heyefu 上午11:24 2020/3/31
      **/
-    public void postTraversing(Node node) {
+    public void postOrderTraverse(Node node) {
         if (node == null) {
             return;
         }
 
-        postTraversing(node.getLeft());
-        postTraversing(node.getRight());
+        postOrderTraverse(node.getLeft());
+        postOrderTraverse(node.getRight());
         System.out.print(node.getData() + " ");
+    }
+
+    /**
+     * 刚刚访问过的节点
+     */
+    private Node pre;
+
+    /**
+     * Description:
+     * <p>
+     * 中序构造线索二叉树.
+     *
+     * @param node 根节点
+     * @author heyefu 下午8:13 2020/3/31
+     **/
+    public void getInThreadBinTree(Node node) {
+        if (node == null) {
+            return;
+        }
+        getInThreadBinTree(node.getLeft());
+        //设置前驱
+        if (node.getLeft() == null && pre != null) {
+            node.setLeft(pre);
+            node.setLTag(1);
+        }
+        //设置后继,在当次时无法确认后继，因此在后继时，设置前一个节点的后继就行
+        if (pre != null && pre.getRight() == null) {
+            pre.setRight(node);
+            pre.setRTag(1);
+        }
+        
+        pre = node;
+        getInThreadBinTree(node.getRight());
     }
 }

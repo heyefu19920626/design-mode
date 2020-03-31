@@ -16,20 +16,29 @@ public class BinaryTreeTest {
 
 
     @Test
-    public void preTraversing() {
+    public void preOrderTraversing() {
         BinaryTree tree = BinaryTree.getCompleteBinaryTree(3);
-        tree.preTraversing(tree.getRoot());
+        tree.preOrderTraverse(tree.getRoot());
     }
 
     @Test
-    public void midTraversing() {
+    public void inOrderTraversing() {
         BinaryTree tree = BinaryTree.getCompleteBinaryTree(3);
-        tree.midTraversing(tree.getRoot());
+        tree.inOrderTraverse(tree.getRoot());
     }
 
     @Test
-    public void postTraversing() {
+    public void postOrderTraversing() {
         BinaryTree tree = BinaryTree.getCompleteBinaryTree(4);
-        tree.postTraversing(tree.getRoot());
+        tree.postOrderTraverse(tree.getRoot());
+    }
+
+    @Test
+    public void inThreadBinaryTree() {
+        BinaryTree tree = BinaryTree.getCompleteBinaryTree(3);
+        tree.inOrderTraverse(tree.getRoot());
+        System.out.println();
+        tree.getInThreadBinTree(tree.getRoot());
+        tree.inOrderTraverse(tree.getRoot());
     }
 }

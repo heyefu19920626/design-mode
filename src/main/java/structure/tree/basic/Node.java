@@ -27,6 +27,11 @@ public class Node {
      * 右节点
      */
     private Node right;
+    /**
+     * 左节点标志，1表示前驱,0表示后继
+     */
+    private int lTag;
+    private int rTag;
 
     public Node(int data) {
         this.data = data;
