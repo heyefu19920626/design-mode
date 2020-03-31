@@ -157,8 +157,30 @@ public class BinaryTree {
             pre.setRight(node);
             pre.setRTag(1);
         }
-        
+
         pre = node;
         getInThreadBinTree(node.getRight());
+    }
+
+    /**
+     * Description:
+     * <p>
+     * 中序遍历线索二叉树
+     *
+     * @param node 根节点
+     * @author heyefu 下午11:26 2020/3/31
+     **/
+    public void inThreadBinaryTreeTraverse(Node node) {
+        while (node != null) {
+            while (node.getLTag() == 0 && node.getLeft() != null) {
+                node = node.getLeft();
+            }
+            System.out.print(node.getData() + " ");
+            while (node.getRTag() == 1) {
+                node = node.getRight();
+                System.out.printf("%d ", node.getData());
+            }
+            node = node.getRight();
+        }
     }
 }

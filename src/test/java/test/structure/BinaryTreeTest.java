@@ -40,5 +40,7 @@ public class BinaryTreeTest {
         System.out.println();
         tree.getInThreadBinTree(tree.getRoot());
         tree.inOrderTraverse(tree.getRoot());
+        System.out.println();
+        tree.inThreadBinaryTreeTraverse(tree.getRoot());
     }
 }
