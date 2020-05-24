@@ -1,16 +1,7 @@
 package test.oj;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @since 2020/5/11
@@ -62,115 +53,15 @@ public class MainOj {
     }
 
     /**
-     * 输入
-     * 20 9 24
-     * 10 2 4 3 5 10 2 18 9 7 2 2 1 3 12 1 8 6 2 2
-     * 00 4 01 02 03 04
-     * 02 1 05
-     * 04 2 06 07
-     * 03 3 11 12 13
-     * 06 1 09
-     * 07 2 08 10
-     * 16 1 15
-     * 13 3 14 16 17
-     * 17 2 18 19
-     *
-     * 答案：
-     * 10 5 2 7
-     * 10 4 10
-     * 10 3 3 6 2
-     * 10 3 3 6 2
-     */
-    static String[] getPathOfCapacity(int[] capacitys, NonLeafNode[] nonLeafNodes, int targetCapacity) {
-        Map<Integer, NonLeafNode> nonLeafNodeMap = new HashMap<>(nonLeafNodes.length);
-        for (NonLeafNode nonLeafNode : nonLeafNodes) {
-            nonLeafNodeMap.put(nonLeafNode.nodeId, nonLeafNode);
-        }
-        NonLeafNode root = nonLeafNodes[0];
-        LinkedList<Integer> temp = new LinkedList();
-        temp.add(root.nodeId);
-        int target = targetCapacity - capacitys[root.nodeId];
-        List<String> result = new ArrayList<>();
-
-        NonLeafNode node = nonLeafNodes[0];
-        NonLeafNode parent;
-        int j = 0;
-        LinkedList<Integer> tempJ = new LinkedList<>();
-        while (j < node.subNodeIds.length) {
-            int subNodeId = node.subNodeIds[j];
-            // 如果为叶子节点
-            if (!nonLeafNodeMap.containsKey(subNodeId)) {
-                if (target == capacitys[subNodeId]) {
-                    temp.addLast(subNodeId);
-                    StringBuilder s = new StringBuilder();
-                    for (int i = 0; i < temp.size(); i++) {
-                        s.append(capacitys[temp.get(i)]).append(" ");
-                    }
-                    result.add(s.toString());
-                    temp.removeLast();
-                }
-                tempJ.addLast(j);
-                parent = getParent(nonLeafNodes, subNodeId);
-                if (parent != null) {
-                    node = parent;
-                    if (tempJ.size() > 0) {
-                        j = tempJ.removeLast();
-                    }
-                    j++;
-                    while (node != null && node.subNodeIds.length <= j) {
-                        node = getParent(nonLeafNodes, node.nodeId);
-                        target += capacitys[temp.removeLast()];
-                        if (tempJ.size() > 0) {
-                            j = tempJ.removeLast();
-                        }
-                        j++;
-                    }
-                }
-                continue;
-            }
-
-            // 非叶子节点
-            if (target - capacitys[subNodeId] > 0) {
-                temp.addLast(subNodeId);
-                target = target - capacitys[subNodeId];
-                node = nonLeafNodeMap.get(subNodeId);
-                tempJ.addLast(j);
-                j = 0;
-            } else {
-                j++;
-            }
-        }
-        Collections.sort(result, (a,b)->{
-            if (a.compareTo(b) > 0) {
-                return -1;
-            } else if (a.compareTo(b) == 0) {
-                return 0;
-            }
-            return 1;
-        });
-        return result.toArray(new String[0]);
-    }
-
-    public static NonLeafNode getParent(NonLeafNode[] array, int id) {
-        for (NonLeafNode nonLeafNode : array) {
-            for (int subNodeId : nonLeafNode.subNodeIds) {
-                if (id == subNodeId) {
-                    return nonLeafNode;
-                }
-            }
-        }
-        return null;
-    }
-    /**
      * 题目描述
      * 现有一树形网络，每个结点是一个设备，每个设备具有一个设备编号和一个管理容量值。
-     *
+     * <p>
      * 你的任务是：找出从根节点到叶节点的管理容量之和等于给定数值的所有路径。
-     *
+     * <p>
      * 如下图，横线上的2位数是设备编号，横线下的为管理容量值。
-     *
-     *
-     *
+     * <p>
+     * <p>
+     * <p>
      * 解答要求
      * 时间限制: 1000ms, 内存限制: 256MB
      * 输入
@@ -181,12 +72,12 @@ public class MainOj {
      * 其中 ID 是一个非叶结点的 2 位数编号，K 是其子结点的个数，后面K个数字是一系列子结点的编号。
      * 输入中出现的数值均为正整数。
      * 为简单起见，我们固定根结点的编号为 00。
-     *
+     * <p>
      * 输出
      * 找出所有管理容量之和为 S 的路径，并按非递增序输出。注：用例保证至少会有一条路径满足要求
      * 每条路径占一行，输出从根结点到叶结点每个结点的管理容量。数字间以一个空格分隔。
      * 行首尾不得有多余空格
-     *
+     * <p>
      * 样例
      * 输入样例1复制
      * 20 9 24
@@ -211,6 +102,81 @@ public class MainOj {
      * 1）10 5 2 7的5大于10 4 10的4所以排第一个；同理，10 4 10排第二个
      * 2）10 3 3 6 2最后的2是18号节点或19号节点，不分先后，但是两个都要输出。
      */
+    static String[] getPathOfCapacity(int[] capacitys, NonLeafNode[] nonLeafNodes, int targetCapacity) {
+        Map<Integer, NonLeafNode> nonLeafNodeMap = new HashMap<>(nonLeafNodes.length);
+        for (NonLeafNode nonLeafNode : nonLeafNodes) {
+            nonLeafNodeMap.put(nonLeafNode.nodeId, nonLeafNode);
+        }
+        NonLeafNode root = nonLeafNodes[0];
+
+        LinkedList<Integer> temp = new LinkedList<>();
+        temp.add(root.nodeId);
+        int target = targetCapacity - capacitys[root.nodeId];
+        List<String> result = new ArrayList<>();
+        NonLeafNode node = root;
+        int j = 0;
+        LinkedList<Integer> tempJ = new LinkedList<>();
+        while (j < node.subNodeIds.length) {
+            int subNodeId = node.subNodeIds[j];
+            // 如果为叶子节点
+            if (!nonLeafNodeMap.containsKey(subNodeId)) {
+                if (target == capacitys[subNodeId]) {
+                    StringBuilder s = new StringBuilder();
+                    for (Integer integer : temp) {
+                        s.append(capacitys[integer]).append(" ");
+                    }
+                    s.append(capacitys[subNodeId]);
+                    result.add(s.toString());
+                }
+                tempJ.addLast(j);
+                node = getParent(nonLeafNodes, subNodeId);
+                if (tempJ.size() > 0) {
+                    j = tempJ.removeLast();
+                }
+                j++;
+                while (node.subNodeIds.length <= j) {
+                    node = getParent(nonLeafNodes, node.nodeId);
+                    target += capacitys[temp.removeLast()];
+                    if (tempJ.size() > 0) {
+                        j = tempJ.removeLast();
+                    }
+                    j++;
+                }
+                continue;
+            }
+
+            // 非叶子节点
+            if (target - capacitys[subNodeId] > 0) {
+                temp.addLast(subNodeId);
+                target = target - capacitys[subNodeId];
+                node = nonLeafNodeMap.get(subNodeId);
+                tempJ.addLast(j);
+                j = 0;
+            } else {
+                j++;
+            }
+        }
+        result.sort((a, b) -> {
+            if (a.compareTo(b) > 0) {
+                return -1;
+            } else if (a.compareTo(b) == 0) {
+                return 0;
+            }
+            return 1;
+        });
+        return result.toArray(new String[0]);
+    }
+
+    public static NonLeafNode getParent(NonLeafNode[] array, int id) {
+        for (NonLeafNode nonLeafNode : array) {
+            for (int subNodeId : nonLeafNode.subNodeIds) {
+                if (id == subNodeId) {
+                    return nonLeafNode;
+                }
+            }
+        }
+        return null;
+    }
 
     /**
      * main入口由OJ平台调用
