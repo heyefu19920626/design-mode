@@ -108,49 +108,57 @@ public class MainOj {
             nonLeafNodeMap.put(nonLeafNode.nodeId, nonLeafNode);
         }
         NonLeafNode root = nonLeafNodes[0];
-
-        LinkedList<Integer> temp = new LinkedList<>();
-        temp.add(root.nodeId);
+        // 用来保存临时路径的栈
+        LinkedList<Integer> tempResult = new LinkedList<>();
+        tempResult.add(root.nodeId);
         int target = targetCapacity - capacitys[root.nodeId];
         List<String> result = new ArrayList<>();
         NonLeafNode node = root;
+        // 用来保存每一层指针位置的栈
+        LinkedList<Integer> tempJStack = new LinkedList<>();
+        // 用来保存父亲节点的栈
+        LinkedList<NonLeafNode> parentStack = new LinkedList<>();
         int j = 0;
-        LinkedList<Integer> tempJ = new LinkedList<>();
         while (j < node.subNodeIds.length) {
+            // 先将根节点压入栈中
+            if (node == root) {
+                parentStack.addLast(root);
+            }
             int subNodeId = node.subNodeIds[j];
             // 如果为叶子节点
             if (!nonLeafNodeMap.containsKey(subNodeId)) {
                 if (target == capacitys[subNodeId]) {
                     StringBuilder s = new StringBuilder();
-                    for (Integer integer : temp) {
+                    for (Integer integer : tempResult) {
                         s.append(capacitys[integer]).append(" ");
                     }
                     s.append(capacitys[subNodeId]);
                     result.add(s.toString());
                 }
-                tempJ.addLast(j);
-                node = getParent(nonLeafNodes, subNodeId);
-                if (tempJ.size() > 0) {
-                    j = tempJ.removeLast();
-                }
+
                 j++;
-                while (node.subNodeIds.length <= j) {
-                    node = getParent(nonLeafNodes, node.nodeId);
-                    target += capacitys[temp.removeLast()];
-                    if (tempJ.size() > 0) {
-                        j = tempJ.removeLast();
+                // 如果为最右叶子节点，返回上一层
+                if (j >= node.subNodeIds.length) {
+                    node = parentStack.removeLast();
+                    // 如果该节点为最右的节点，则再返回上一层
+                    while (node.subNodeIds.length <= j) {
+                        // node = parentStack.isEmpty() ? root : parentStack.removeLast();
+                        node = parentStack.removeLast();
+                        target += capacitys[tempResult.removeLast()];
+                        j = tempJStack.removeLast();
+                        j++;
                     }
-                    j++;
                 }
                 continue;
             }
 
             // 非叶子节点
             if (target - capacitys[subNodeId] > 0) {
-                temp.addLast(subNodeId);
+                tempResult.addLast(subNodeId);
                 target = target - capacitys[subNodeId];
                 node = nonLeafNodeMap.get(subNodeId);
-                tempJ.addLast(j);
+                parentStack.addLast(node);
+                tempJStack.addLast(j);
                 j = 0;
             } else {
                 j++;
@@ -165,17 +173,6 @@ public class MainOj {
             return 1;
         });
         return result.toArray(new String[0]);
-    }
-
-    public static NonLeafNode getParent(NonLeafNode[] array, int id) {
-        for (NonLeafNode nonLeafNode : array) {
-            for (int subNodeId : nonLeafNode.subNodeIds) {
-                if (id == subNodeId) {
-                    return nonLeafNode;
-                }
-            }
-        }
-        return null;
     }
 
     /**
