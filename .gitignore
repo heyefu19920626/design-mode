@@ -26,4 +26,6 @@ hs_err_pid*
 *.iml
 .idea
 target
-
+src/test/java/test/leetcode/editor/cn/all.json
+src/test/java/test/leetcode/editor/cn/translation.json
+src/test/java/test/MainTest.java
