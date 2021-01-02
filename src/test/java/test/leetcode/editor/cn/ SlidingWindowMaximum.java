@@ -1,5 +1,6 @@
 package test.leetcode.editor.cn;
 
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 
 /**
@@ -70,7 +71,8 @@ class SlidingWindowMaximum {
         Solution solution = new Solution();
         int[] nums = new int[]{1, 7, 8, -6, 6, 4, 0, 5};
         // final int[] result = solution.maxSlidingWindow(nums, 2);
-        final int[] result = solution.maxSlidingWindowUseQue(nums, 4);
+        // final int[] result = solution.maxSlidingWindowUseQue(nums, 4);
+        final int[] result = solution.drabQueue(nums, 4);
         for (int i : result) {
             System.out.printf(i + " ");
         }
@@ -87,6 +89,51 @@ class SlidingWindowMaximum {
     }
 
     static class Solution {
+        /**
+         * 使用单调队列
+         * <p>
+         * 队列从大到小，且元素在数组中的序号从小到大
+         * <p>
+         * 新元素a插入时，如果队尾元素大于a,a直接插入队尾，否则队尾先出队，直到队尾元素大于a
+         * <p>
+         * 滑动队列，队首永远为最大值，如果队首元素的位置在滑块内，则为该元素，否则队首出队直到队首在滑块内
+         *
+         * @param nums 数组
+         * @param k    滑块长度
+         * @return 结果
+         */
+        public int[] drabQueue(int[] nums, int k) {
+            LinkedList<Ele> queue = new LinkedList<>();
+            // 由于单调队列是即能判断值的大小，又能判断序号的大小，实际上这里可以只存序号
+            queue.addLast(new Ele(nums[0], 0));
+            for (int i = 1; i < k; i++) {
+                addQueue(nums, queue, i);
+            }
+            int[] result = new int[nums.length - k + 1];
+            result[0] = queue.peekFirst().value;
+            for (int i = k; i < nums.length; i++) {
+                // 如果队列超出长度了，弹出队首
+                if (queue.size() > k) {
+                    queue.pollFirst();
+                }
+                addQueue(nums, queue, i);
+                while (queue.peekFirst().place < (i - k + 1)) {
+                    queue.pollFirst();
+                }
+                result[i - k + 1] = queue.peekFirst().value;
+            }
+            return result;
+        }
+
+        private void addQueue(int[] nums, LinkedList<Ele> queue, int i) {
+            if (queue.peekLast().value < nums[i]) {
+                while (!queue.isEmpty() && nums[i] > queue.peekLast().value) {
+                    queue.pollLast();
+                }
+            }
+            queue.addLast(new Ele(nums[i], i));
+        }
+
         /**
          * 使用优先级队列
          *
