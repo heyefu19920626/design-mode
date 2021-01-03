@@ -20,12 +20,12 @@ import java.util.List;
 class PartitionList {
     public static void main(String[] args) {
         Solution solution = new PartitionList().new Solution();
-        ListNode root = new ListNode(2);
-        root.next = new ListNode(1);
-        // root.next.next = new ListNode(3);
-        // root.next.next.next = new ListNode(2);
-        // root.next.next.next.next = new ListNode(5);
-        // root.next.next.next.next.next = new ListNode(2);
+        ListNode root = new ListNode(1);
+        root.next = new ListNode(4);
+        root.next.next = new ListNode(3);
+        root.next.next.next = new ListNode(2);
+        root.next.next.next.next = new ListNode(5);
+        root.next.next.next.next.next = new ListNode(2);
         ListNode result = solution.partition(root, 3);
         while (result != null) {
             System.out.println(result.val);
@@ -50,7 +50,8 @@ class PartitionList {
                 ListNode tmp = head;
                 head = head.next;
                 root = head;
-                less = addLessEle(less, tmp);
+                // less = addLessEle(less, tmp);
+                less = addLessEleNoOder(less, tmp);
             }
             if (head == null) {
                 return less;
@@ -59,7 +60,8 @@ class PartitionList {
                 ListNode tmp = head.next;
                 ListNode tmpNext = tmp.next;
                 if (head.next.val < x) {
-                    less = addLessEle(less, head.next);
+                    // less = addLessEle(less, head.next);
+                    less = addLessEleNoOder(less, head.next);
                     head.next = tmpNext;
                 } else {
                     head = tmp;
@@ -68,11 +70,12 @@ class PartitionList {
             if (less == null) {
                 return root;
             }
+            lessLast.next = root;
             ListNode lessHead = less;
-            while (less.next != null) {
-                less = less.next;
-            }
-            less.next = root;
+            // while (less.next != null) {
+            //     less = less.next;
+            // }
+            // less.next = root;
             return lessHead;
         }
 
@@ -86,6 +89,7 @@ class PartitionList {
                 return ele;
             }
             lessLast.next = ele;
+            lessLast = ele;
             ele.next = null;
             return less;
         }
