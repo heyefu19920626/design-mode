@@ -25,6 +25,7 @@ package test.leetcode.editor.cn;
 public class CountingBits {
     public static void main(String[] args) {
         Solution solution = new CountingBits().new Solution();
+        System.out.println(solution.queryOneNum(5));
         final int[] ints = solution.countBits(3);
         for (int i = 0; i < ints.length; i++) {
             System.out.printf("%d ", ints[i]);
@@ -46,7 +47,7 @@ public class CountingBits {
                         continue;
                     }
                 }
-                result[i] = queryOneNum(Integer.toBinaryString(i));
+                result[i] = queryOneNum(i);
             }
             return result;
         }
@@ -60,6 +61,22 @@ public class CountingBits {
                 }
             }
             return num;
+        }
+
+
+        private int queryOneNum(int target) {
+            if (target == 0) {
+                return 0;
+            }
+            // 十进制转二进制： 除2取余，逆序排列
+            int num = 0;
+            while (target > 1) {
+                if (target % 2 != 0) {
+                    num++;
+                }
+                target = target >> 1;
+            }
+            return num + 1;
         }
     }
 }
