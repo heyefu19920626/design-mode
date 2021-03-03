@@ -50,23 +50,12 @@ public class CountingBits {
                     }
                     result[i] = queryOneNum(i);
                 } else {
+                    // 奇数的1的个数比上一个偶数多1
                     result[i] = result[i - 1] + 1;
                 }
             }
             return result;
         }
-
-        private int queryOneNum(String target) {
-            count++;
-            int num = 0;
-            for (int i = 0; i < target.length(); i++) {
-                if (target.charAt(i) == '1') {
-                    num++;
-                }
-            }
-            return num;
-        }
-
 
         private int queryOneNum(int target) {
             if (target == 0) {
