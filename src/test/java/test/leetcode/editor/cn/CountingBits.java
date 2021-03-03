@@ -26,7 +26,7 @@ public class CountingBits {
     public static void main(String[] args) {
         Solution solution = new CountingBits().new Solution();
         System.out.println(solution.queryOneNum(5));
-        final int[] ints = solution.countBits(3);
+        final int[] ints = solution.countBits(100);
         for (int i = 0; i < ints.length; i++) {
             System.out.printf("%d ", ints[i]);
         }
@@ -39,15 +39,19 @@ public class CountingBits {
 
         public int[] countBits(int num) {
             int[] result = new int[num + 1];
-            for (int i = 0; i <= num; i++) {
+            result[0] = 0;
+            for (int i = 1; i <= num; i++) {
                 if (i % 2 == 0) {
-                    int temp = i / 2;
+                    int temp = i >> 1;
                     if (result[temp] != 0) {
+                        // 被2整除的1的个数与其商的1的个数相等
                         result[i] = result[temp];
                         continue;
                     }
+                    result[i] = queryOneNum(i);
+                } else {
+                    result[i] = result[i - 1] + 1;
                 }
-                result[i] = queryOneNum(i);
             }
             return result;
         }
