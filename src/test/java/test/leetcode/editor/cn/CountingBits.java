@@ -25,13 +25,10 @@ package test.leetcode.editor.cn;
 public class CountingBits {
     public static void main(String[] args) {
         Solution solution = new CountingBits().new Solution();
-        System.out.println(solution.queryOneNum(5));
-        final int[] ints = solution.countBits(100);
+        final int[] ints = solution.countBits(5);
         for (int i = 0; i < ints.length; i++) {
             System.out.printf("%d ", ints[i]);
         }
-        System.out.println();
-        System.out.println(solution.count);
     }
 
     class Solution {
@@ -39,20 +36,15 @@ public class CountingBits {
 
         public int[] countBits(int num) {
             int[] result = new int[num + 1];
-            result[0] = 0;
+            int highBit = 0;
             for (int i = 1; i <= num; i++) {
-                if (i % 2 == 0) {
-                    int temp = i >> 1;
-                    if (result[temp] != 0) {
-                        // 被2整除的1的个数与其商的1的个数相等
-                        result[i] = result[temp];
-                        continue;
-                    }
-                    result[i] = queryOneNum(i);
-                } else {
-                    // 奇数的1的个数比上一个偶数多1
-                    result[i] = result[i - 1] + 1;
+                // 对于正整数 x，如果可以知道最大的正整数 y，使得y≤x且y是2的整数次幂，则 y的二进制表示中只有最高位是1，其余都是0，此时称y为x的「最高有效位」。
+                // 令 z=x-y，显然0≤z<x，则bits[x]=bits[z]+1。
+                // i & (i - 1) == 0 说明i是2的整数次冥
+                if ((i & (i - 1)) == 0) {
+                    highBit = i;
                 }
+                result[i] = result[i - highBit] + 1;
             }
             return result;
         }
