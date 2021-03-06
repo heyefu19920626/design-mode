@@ -17,16 +17,45 @@ package test.leetcode.editor.cn;
 // Related Topics 栈
 
 
+import java.util.Arrays;
+import java.util.Deque;
+import java.util.LinkedList;
+
 public class NextGreaterElementIi {
     public static void main(String[] args) {
         Solution solution = new NextGreaterElementIi().new Solution();
-        int[] nums = new int[]{1};
-        for (int i : solution.nextGreaterElements(nums)) {
+        int[] nums = new int[]{1, 2, 1};
+        for (int i : solution.nextGreaterElementsMonotonicStack(nums)) {
             System.out.println(i);
         }
     }
 
     class Solution {
+
+        /**
+         * 使用单调栈
+         * <p>
+         * 栈里存放数组下标，当元素nums[i],将栈中小于nums[i]的值全部出栈，这些出栈的下标的下一个最大元素都为nums[i](如果有更靠前的更大元素，那么这些位置将被提前弹出栈)
+         * <p>
+         * 涉及循环，将所有元素在右侧再拼一次，使用取余即可取出当前元素
+         *
+         * @param nums 源数组
+         * @return 结果
+         */
+        public int[] nextGreaterElementsMonotonicStack(int[] nums) {
+            int len = nums.length;
+            int[] result = new int[len];
+            Arrays.fill(result, -1);
+            Deque<Integer> stack = new LinkedList<>();
+            for (int i = 0; i < 2 * len - 1; i++) {
+                while (!stack.isEmpty() && nums[stack.peek() % len] < nums[i % len]) {
+                    result[stack.pop() % len] = nums[i % len];
+                }
+                stack.push(i);
+            }
+            return result;
+        }
+
         /**
          * @param nums
          * @return
