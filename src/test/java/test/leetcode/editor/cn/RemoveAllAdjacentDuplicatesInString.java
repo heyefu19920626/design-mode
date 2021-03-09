@@ -28,8 +28,6 @@ package test.leetcode.editor.cn;
 // Related Topics 栈
 
 
-import java.util.Stack;
-
 public class RemoveAllAdjacentDuplicatesInString {
     public static void main(String[] args) {
         Solution solution = new RemoveAllAdjacentDuplicatesInString().new Solution();
@@ -40,16 +38,18 @@ public class RemoveAllAdjacentDuplicatesInString {
 
     class Solution {
         public String removeDuplicates(String S) {
-            Stack<Character> stack = new Stack<>();
+            StringBuilder builder = new StringBuilder();
+            int top = -1;
             for (int i = 0; i < S.length(); i++) {
-                if (stack.isEmpty() || stack.peek() != S.charAt(i)) {
-                    stack.push(S.charAt(i));
+                char current = S.charAt(i);
+                if (builder.length() == 0 || builder.charAt(top) != current) {
+                    builder.append(current);
+                    top++;
                 } else {
-                    stack.pop();
+                    builder.deleteCharAt(top);
+                    top--;
                 }
             }
-            StringBuilder builder = new StringBuilder();
-            stack.forEach(builder::append);
             return builder.toString();
         }
     }
