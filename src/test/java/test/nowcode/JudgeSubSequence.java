@@ -4,8 +4,8 @@
 
 package test.nowcode;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * 判断字符串子序列
@@ -18,11 +18,10 @@ public class JudgeSubSequence {
 
     @Test
     public void test() {
-        Assert.assertEquals(3, new JudgeSubSequence().judgeSubSequence("abcaybec", "abc"));
-        Assert.assertEquals(0, new JudgeSubSequence().judgeSubSequence("abcaybec", "acy"));
-        Assert.assertEquals(-1, new JudgeSubSequence().judgeSubSequence("aebycd", "ayb"));
+        Assertions.assertSame(3, new JudgeSubSequence().judgeSubSequence("abcaybec", "abc"));
+        Assertions.assertSame(0, new JudgeSubSequence().judgeSubSequence("abcaybec", "acy"));
+        Assertions.assertSame(-1, new JudgeSubSequence().judgeSubSequence("aebycd", "ayb"));
     }
-
 
     public int judgeSubSequence(String source, String target) {
         int targetIndex = target.length() - 1;

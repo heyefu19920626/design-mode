@@ -4,8 +4,8 @@
 
 package test.leetcode.editor.cn;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +27,9 @@ public class Solution821 {
 
     @Test
     public void test() {
-        Assert.assertArrayEquals(new int[]{3, 2, 1, 0, 1, 0, 0, 1, 2, 2, 1, 0},
+        Assertions.assertArrayEquals(new int[]{3, 2, 1, 0, 1, 0, 0, 1, 2, 2, 1, 0},
             new Solution821().shortestToChar("loveleetcode", 'e'));
-        Assert.assertArrayEquals(new int[]{3, 2, 1, 0},
+        Assertions.assertArrayEquals(new int[]{3, 2, 1, 0},
             new Solution821().shortestToChar("aaab", 'b'));
     }
 

@@ -4,8 +4,8 @@
 
 package test.leetcode.editor.cn;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
@@ -15,17 +15,18 @@ import java.util.Arrays;
 public class Solution1170 {
     @Test
     public void computeMinTimes() {
-        Assert.assertEquals(1, new Solution1170().computeMinTimes("bbabc"));
-        Assert.assertEquals(2, new Solution1170().computeMinTimes("bbabac"));
+        Assertions.assertSame(1, new Solution1170().computeMinTimes("bbabc"));
+        Assertions.assertSame(2, new Solution1170().computeMinTimes("bbabac"));
     }
 
     @Test
     public void numSmallerByFrequency() {
-        Assert.assertArrayEquals(new int[]{1},
+        Assertions.assertArrayEquals(new int[]{1},
             new Solution1170().numSmallerByFrequency(new String[]{"cbd"}, new String[]{
                 "zaaaz"}));
-        Assert.assertArrayEquals(new int[]{1, 2}, new Solution1170().numSmallerByFrequency(new String[]{"bbb", "cc"},
-            new String[]{"a", "aa", "aaa", "aaaa"}));
+        Assertions.assertArrayEquals(new int[]{1, 2},
+            new Solution1170().numSmallerByFrequency(new String[]{"bbb", "cc"},
+                new String[]{"a", "aa", "aaa", "aaaa"}));
     }
 
     public int[] numSmallerByFrequency(String[] queries, String[] words) {
