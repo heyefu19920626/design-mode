@@ -1,4 +1,4 @@
-package mode.algorithm.sort;
+package algorithm.sort;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

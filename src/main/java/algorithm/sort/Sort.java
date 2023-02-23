@@ -1,4 +1,4 @@
-package mode.algorithm.sort;
+package algorithm.sort;
 
 /**
  * @author he
