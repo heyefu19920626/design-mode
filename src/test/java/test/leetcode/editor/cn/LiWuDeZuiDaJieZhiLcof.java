@@ -45,8 +45,25 @@ public class LiWuDeZuiDaJieZhiLcof {
          * @return
          */
         public int maxValue(int[][] grid) {
-            Map<String, Integer> map = new HashMap<>();
-            return maxValue(grid, grid.length - 1, grid[0].length - 1, map);
+            int res = 0;
+            int m = grid.length, n = grid[0].length;
+            int[][] temp = new int[m][n];
+            for (int i = 0; i < m; i++) {
+                for (int j = 0; j < n; j++) {
+                    int up = temp[0][j];
+                    if (i > 0) {
+                        up = temp[i - 1][j];
+                    }
+                    int left = temp[i][0];
+                    if (j > 0) {
+                        left = temp[i][j - 1];
+                    }
+                    temp[i][j] = grid[i][j] + Math.max(up, left);
+                }
+            }
+            return temp[m - 1][n - 1];
+            // Map<String, Integer> map = new HashMap<>();
+            // return maxValue(grid, grid.length - 1, grid[0].length - 1, map);
         }
 
         private int maxValue(int[][] grid, int m, int n, Map<String, Integer> map) {
