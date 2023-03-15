@@ -92,7 +92,7 @@ public class MaximalNetworkRank {
                 return nums[maxIndex] + nums[secondIndex];
             }
             // 最大值大于第二大的值的时候：如果第二大的值不跟最大值相邻，则返回相加的值，如果相邻，要减去一
-            if (maxIndex > secondIndex) {
+            if (nums[maxIndex] > nums[secondIndex]) {
                 while (!queue.isEmpty() && nums[queue.peek()] == nums[secondIndex]) {
                     secondIndex = queue.poll();
                     if (!list.contains(maxIndex + "," + secondIndex) && !list.contains(secondIndex + "," + maxIndex)) {
