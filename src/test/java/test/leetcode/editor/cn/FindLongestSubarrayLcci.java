@@ -46,7 +46,7 @@ public class FindLongestSubarrayLcci {
          * 求和为0的最长子数组：
          * 数组转换后求前缀后sums
          * 遍历sums,记录每个sum出现的次数
-         * 从右到左再次遍历sums，假设当前位为j，设满足题解的左位数索引为i，则sum[j] - sum[i] = 0
+         * 从右到左再次遍历sums，假设当前位为j，设满足题解的左位数索引为i，则sum[j] - sum[i-1] = 0
          * 遍历满足的i，记录j-i的最大值
          *
          * @param array
@@ -60,33 +60,40 @@ public class FindLongestSubarrayLcci {
             int[] sums = new int[len];
             char first = array[0].charAt(0);
             sums[0] = first >= '0' && first <= '9' ? 1 : -1;
-            // Map<Integer, Integer> map = new HashMap<>();
-            // map.put(sums[0], 1);
             Map<Integer, List<Integer>> mapIndex = new HashMap<>();
             List<Integer> start = new ArrayList<>();
             start.add(0);
             mapIndex.put(sums[0], start);
             for (int i = 1; i < array.length; i++) {
-                char cu = array[i].charAt(0);
-                if (cu >= '0' && cu <= '9') {
-                    sums[i] = sums[i - 1] + 1;
-                } else {
+                if (Character.isLetter(array[i].charAt(0))) {
                     sums[i] = sums[i - 1] - 1;
+                } else {
+                    sums[i] = sums[i - 1] + 1;
                 }
-                // map.put(sums[i], map.getOrDefault(sums[i], 0) + 1);
-                mapIndex.getOrDefault(sums[i], new ArrayList<>()).add(i);
+                List<Integer> orDefault = mapIndex.getOrDefault(sums[i], new ArrayList<>());
+                orDefault.add(i);
+                mapIndex.put(sums[i], orDefault);
             }
-
             int st = -1, end = -1, res = 0;
             for (int i = len - 1; i >= 0; i--) {
                 List<Integer> list = mapIndex.get(sums[i]);
-                if (list == null || list.size() < 2) {
+                if (list == null) {
+                    continue;
+                }
+                if (sums[i] == 0) {
+                    if (i + 1 >= res) {
+                        res = i + 1;
+                        st = 0;
+                        end = i;
+                    }
+                }
+                if (list.size() < 2) {
                     continue;
                 }
                 for (Integer cur : list) {
-                    if (i - cur > res) {
+                    if (i - cur >= res) {
                         res = i - cur;
-                        st = cur;
+                        st = cur + 1;
                         end = i;
                     }
                 }
@@ -95,11 +102,7 @@ public class FindLongestSubarrayLcci {
                 return new String[]{};
             }
             String[] result = new String[res];
-            int j = 0;
-            for (int i = st + 1; i < end + 1; i++) {
-                result[j] = array[i];
-                j++;
-            }
+            System.arraycopy(array, st, result, 0, res);
             return result;
         }
     }

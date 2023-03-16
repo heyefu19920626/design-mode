@@ -15,6 +15,6 @@ class FindLongestSubarrayLcciTest {
 
     @Test
     void should_return_xx() {
-        Assertions.assertArrayEquals(new String[]{"A", "A"}, solution.findLongestSubarray(new String[]{}));
+        Assertions.assertArrayEquals(new String[]{}, solution.findLongestSubarray(new String[]{"A", "A"}));
     }
 }
