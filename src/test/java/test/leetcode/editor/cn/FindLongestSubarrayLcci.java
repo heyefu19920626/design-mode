@@ -48,61 +48,44 @@ public class FindLongestSubarrayLcci {
          * 遍历sums,记录每个sum出现的次数
          * 从右到左再次遍历sums，假设当前位为j，设满足题解的左位数索引为i，则sum[j] - sum[i-1] = 0
          * 遍历满足的i，记录j-i的最大值
+         * 时间复杂度: O(n*n)
+         * <p>
+         * 优化版:
+         * 求和为0的最长子数组,并且左侧的索引要尽可能的小：
+         * 从右到左遍历,计算前缀和sums，假设当前位为j，设满足题解的左位数索引为i，则sum[j] - sum[i-1] = 0
+         * 因为左侧索引要尽可能的小,所以i记录最小值即可
          *
          * @param array
          * @return
          */
         public String[] findLongestSubarray(String[] array) {
-            int len = array.length;
-            if (len < 1) {
-                return new String[]{};
-            }
-            int[] sums = new int[len];
-            char first = array[0].charAt(0);
-            sums[0] = first >= '0' && first <= '9' ? 1 : -1;
-            Map<Integer, List<Integer>> mapIndex = new HashMap<>();
-            List<Integer> start = new ArrayList<>();
-            start.add(0);
-            mapIndex.put(sums[0], start);
-            for (int i = 1; i < array.length; i++) {
+            int sum = 0;
+            Map<Integer, Integer> sumFirstIndex = new HashMap<>();
+            // 如果有前缀和为0,则可以左侧可以从-1开始计算
+            sumFirstIndex.put(0, -1);
+            int res = 0;
+            int start = 0;
+            for (int i = 0; i < array.length; i++) {
                 if (Character.isLetter(array[i].charAt(0))) {
-                    sums[i] = sums[i - 1] - 1;
+                    sum--;
                 } else {
-                    sums[i] = sums[i - 1] + 1;
+                    sum++;
                 }
-                List<Integer> orDefault = mapIndex.getOrDefault(sums[i], new ArrayList<>());
-                orDefault.add(i);
-                mapIndex.put(sums[i], orDefault);
-            }
-            int st = -1, end = -1, res = 0;
-            for (int i = len - 1; i >= 0; i--) {
-                List<Integer> list = mapIndex.get(sums[i]);
-                if (list == null) {
-                    continue;
-                }
-                if (sums[i] == 0) {
-                    if (i + 1 >= res) {
-                        res = i + 1;
-                        st = 0;
-                        end = i;
+                if (sumFirstIndex.containsKey(sum)) {
+                    int firstIndex = sumFirstIndex.get(sum);
+                    if (i - firstIndex > res) {
+                        res = i - firstIndex;
+                        start = firstIndex + 1;
                     }
-                }
-                if (list.size() < 2) {
-                    continue;
-                }
-                for (Integer cur : list) {
-                    if (i - cur >= res) {
-                        res = i - cur;
-                        st = cur + 1;
-                        end = i;
-                    }
+                } else {
+                    sumFirstIndex.put(sum, i);
                 }
             }
             if (res == 0) {
                 return new String[]{};
             }
             String[] result = new String[res];
-            System.arraycopy(array, st, result, 0, res);
+            System.arraycopy(array, start, result, 0, res);
             return result;
         }
     }
