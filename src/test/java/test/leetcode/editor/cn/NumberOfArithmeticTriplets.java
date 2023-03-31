@@ -46,6 +46,10 @@ package test.leetcode.editor.cn;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 public class NumberOfArithmeticTriplets {
     NumberOfArithmeticTriplets.Solution solution = new Solution();
 
@@ -54,6 +58,8 @@ public class NumberOfArithmeticTriplets {
     class Solution {
         /**
          * 暴力,时间复杂度O(n*n*n)
+         * <p>
+         * 哈希表
          *
          * @param nums
          * @param diff
@@ -61,16 +67,11 @@ public class NumberOfArithmeticTriplets {
          */
         public int arithmeticTriplets(int[] nums, int diff) {
             int res = 0;
-            for (int i = 0; i < nums.length; i++) {
-                for (int j = i + 1; j < nums.length; j++) {
-                    if (nums[j] - nums[i] != diff) {
-                        continue;
-                    }
-                    for (int k = j + 1; k < nums.length; k++) {
-                        if (nums[k] - nums[j] == diff) {
-                            res++;
-                        }
-                    }
+            Set<Integer> ele = new HashSet<>();
+            for (int i = nums.length - 1; i >= 0; i--) {
+                ele.add(nums[i]);
+                if (ele.contains(nums[i] + diff) && ele.contains(nums[i] + 2 * diff)) {
+                    res++;
                 }
             }
             return res;
