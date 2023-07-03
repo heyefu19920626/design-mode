@@ -4,7 +4,11 @@ import mode.behavioral.observer.BinaryObserver;
 import mode.behavioral.observer.HexaObserver;
 import mode.behavioral.observer.OctalObserver;
 import mode.behavioral.observer.Subject;
-import mode.create.abstracfactory.*;
+import mode.create.abstracfactory.AbstractPcFactory;
+import mode.create.abstracfactory.DellPcFactory;
+import mode.create.abstracfactory.HpPcFactory;
+import mode.create.abstracfactory.Keyboard;
+import mode.create.abstracfactory.Mouse;
 import mode.create.builder.Meal;
 import mode.create.builder.MealBuilder;
 import mode.create.simplefactory.BaseCar;
@@ -12,7 +16,12 @@ import mode.create.simplefactory.CarFactory;
 import mode.create.simplefactory.DzCar;
 import mode.create.singleton.IdlerSingletonPattern;
 import mode.create.singleton.SingletonPattern;
-import mode.structure.decorator.*;
+import mode.structure.decorator.Circle;
+import mode.structure.decorator.Rectangle;
+import mode.structure.decorator.RedShapeDecorator;
+import mode.structure.decorator.Shape;
+import mode.structure.decorator.YelloShapeDecorator;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
@@ -28,7 +37,7 @@ public class TestProxyModel {
     /**
      * 测试简单工厂模式.
      **/
-    @org.junit.Test
+    @Test
     public void simpleFactory() throws IOException {
 
         BaseCar bmcar = CarFactory.getBmCar();
@@ -47,7 +56,7 @@ public class TestProxyModel {
      *
      * @author heyefu 下午11:11 18-8-4
      **/
-    @org.junit.Test
+    @Test
     public void abstractFactory() {
 
         AbstractPcFactory dellPcFactory = new DellPcFactory();
@@ -69,7 +78,7 @@ public class TestProxyModel {
      *
      * @author heyefu 下午10:14 18-8-5
      **/
-    @org.junit.Test
+    @Test
     public void singletonPattern() {
 //        饿汉式
         SingletonPattern singletonPattern = SingletonPattern.getSinletonPattern();
@@ -87,7 +96,7 @@ public class TestProxyModel {
      *
      * @author heyefu 下午8:53 18-8-11
      **/
-    @org.junit.Test
+    @Test
     public void builderPattern() {
 
         MealBuilder mealBuilder = new MealBuilder();
@@ -106,7 +115,7 @@ public class TestProxyModel {
     /**
      * 测试装饰器模式.
      **/
-    @org.junit.Test
+    @Test
     public void decoratorPattern() {
         Shape redRectangle = new RedShapeDecorator(new Rectangle());
         redRectangle.draw();
@@ -116,7 +125,7 @@ public class TestProxyModel {
         redCircle.draw();
     }
 
-    @org.junit.Test
+    @Test
     public void observerPattern() {
         Subject subject = new Subject();
 
