@@ -2,6 +2,7 @@ package test.oj;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class ExperimentBox {
     public static void main(String[] args) {
@@ -33,6 +34,8 @@ public class ExperimentBox {
 
     static class Solution {
         private int[][] ICONS;
+
+        private PriorityQueue<int[]> queue;
 
         /**
          * @param rowCount   盒子行数

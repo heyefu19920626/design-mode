@@ -1,7 +1,5 @@
 package test.leetcode.editor.cn;
 
-import java.util.List;
-
 /**
  * //给你一个链表和一个特定值 x ，请你对链表进行分隔，使得所有小于 x 的节点都出现在大于或等于 x 的节点之前。
  * //
@@ -115,14 +113,5 @@ class PartitionList {
             less.next = ele;
             return head;
         }
-    }
-}
-
-class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode(int x) {
-        val = x;
     }
 }
