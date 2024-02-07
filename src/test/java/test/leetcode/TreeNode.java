@@ -1,10 +1,14 @@
 package test.leetcode;
 
+import lombok.Getter;
+
 /**
+ *
  * @author tangan
  * @version [1.0]
  * @since 2023/3/25
  */
+@Getter
 public class TreeNode {
     public int val;
     public TreeNode left;

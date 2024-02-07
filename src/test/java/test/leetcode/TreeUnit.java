@@ -1,5 +1,6 @@
 package test.leetcode;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -10,7 +11,35 @@ import java.util.Queue;
  * @since 2023/3/25
  */
 public class TreeUnit {
+    /**
+     * 以层序遍历二叉树
+     *
+     * @param root 二叉树的根节点
+     * @return 层序遍历的顺序
+     */
+    public static List<TreeNode> bfs(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        List<TreeNode> res = new ArrayList<>();
+        while (!queue.isEmpty()) {
+            TreeNode poll = queue.poll();
+            res.add(poll);
+            if (poll.left != null) {
+                queue.offer(poll.left);
+            }
+            if (poll.right != null) {
+                queue.offer(poll.right);
+            }
+        }
+        return res;
+    }
 
+    /**
+     * 初始化二叉树
+     *
+     * @param list 二叉树的元素，以层序输入，不存在的位为null
+     * @return 二叉树的根节点
+     */
     public static TreeNode initTreeNode(List<Integer> list) {
         Queue<TreeNode> queue = new LinkedList<>();
         TreeNode root = new TreeNode();
