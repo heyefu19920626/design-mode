@@ -1,9 +1,6 @@
 package test.leetcode;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @author tangan
@@ -34,6 +31,10 @@ public class TreeUnit {
         return res;
     }
 
+    public static TreeNode initTreeNode(Integer... params) {
+        return initTreeNode(Arrays.asList(params));
+    }
+
     /**
      * 初始化二叉树
      *
@@ -41,6 +42,9 @@ public class TreeUnit {
      * @return 二叉树的根节点
      */
     public static TreeNode initTreeNode(List<Integer> list) {
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
         Queue<TreeNode> queue = new LinkedList<>();
         TreeNode root = new TreeNode();
         root.val = list.get(0);
